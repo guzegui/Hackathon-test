@@ -12,28 +12,26 @@ export async function createProject() {
     const sourceID = "EQMBBVYGZOFUIHEXFOXKTFTANEKBXLBXHAYDFFMREEMRQEVADYMMEWACTODD"
     const sourceSeed = "xpsxzzfqvaohzzwlbofvqkqeemzhnrscpeeokoumekfodtgzmwghtqm"
 
-    const createProjectPayload = new CreateProjectPayload({});
+    // const createProjectPayload = new CreateProjectPayload({});
     const rpcStatus = await getRPCStatus();
-    const currentTick = rpcStatus.lastProcessedTick.tickNumber;
+    const currentTick = rpcStatus.tickInfo.tick;
     const targetTick = currentTick + 15;
+    console.log("Current tick: " + currentTick);
+    console.log("Target tick: " + targetTick);
 
     const tx = new QubicTransaction().setSourcePublicKey(sourceID)
-        .setDestinationPublicKey("WEVWZOHASCHODGRVRFKZCGUDGHEDWCAZIZXWBUHZEAMNVHKZPOIZKUEHNQSJ")
+        .setDestinationPublicKey("MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWLWD")
         .setAmount(10)
         .setTick(targetTick)
         .setInputType(3)
-        .setInputSize(0)
 
     await tx.build(sourceSeed);
+
+    console.log(tx);
 
     const response = await broadcastTransaction(tx);
     const responseData = await response.json();
 
-    if (!responseData.ok) {
-        console.log("Failed to broadcast transaction");
-        console.log(responseData);
-        return;
-    }
     console.log("Transaction broadcasted successfully");
     console.log("Transaction ID: " + responseData.transactionId)
     console.log("Scheduled for tick: " + targetTick)
