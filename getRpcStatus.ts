@@ -1,4 +1,4 @@
-const baseURL = 'https://testnet-rpc.qubic.org'
+const baseURL = 'https://185.84.224.100'
 
 // Querying the RPC status
 export async function getRPCStatus() {

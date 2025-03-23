@@ -23,7 +23,6 @@ export async function createProject() {
         .setTick(targetTick)
         .setInputType(3)
         .setInputSize(0)
-        .setPayload(createProjectPayload.getTransactionPayload());
 
     await tx.build(sourceSeed);
 
@@ -32,6 +31,7 @@ export async function createProject() {
 
     if (!responseData.ok) {
         console.log("Failed to broadcast transaction");
+        console.log(responseData);
         return;
     }
     console.log("Transaction broadcasted successfully");
