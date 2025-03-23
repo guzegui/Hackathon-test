@@ -39,16 +39,19 @@ async function fetchHM25NumProjects(httpEndpoint) {
             console.warn('Buffer too short for stats, returning defaults:', buf.length)
             return {
                 numberOfProjects: 0n,
+                nameOfProject: 0n
             }
         }
 
         return {
             numberOfProjects: buf.readBigUInt64LE(0).toString(),
+            nameOfProject: buf.readBigUInt64LE(8).toString()
         }
     } catch (error) {
         console.error('Error fetching HM25 stats:', error)
         return {
             numberOfProjects: 0n,
+            nameOfProject: 0n
         }
     }
 }

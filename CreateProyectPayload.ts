@@ -13,7 +13,7 @@ const { DynamicPayload } = DynamicPayloadPkg;
 
 
 export class CreateProjectPayload implements IQubicBuildPackage {
-    private _internalPackageSize = 0; // 0 bytes
+    private _internalPackageSize = 8; // 0 bytes
     private createProjectInput: CreateProjectInput;    
 
     constructor(actionInput: CreateProjectInput) {
@@ -26,6 +26,7 @@ export class CreateProjectPayload implements IQubicBuildPackage {
 
     getPackageData(): Uint8Array {
         const builder = new QubicPackageBuilder(this.getPackageSize());
+        builder.add(this.createProjectInput.title);
         return builder.getData();
     }
 
@@ -38,4 +39,5 @@ export class CreateProjectPayload implements IQubicBuildPackage {
 }
 
 export interface CreateProjectInput {
+    title: Long;
 };

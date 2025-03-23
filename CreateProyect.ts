@@ -12,7 +12,9 @@ export async function createProject() {
     const sourceID = "EQMBBVYGZOFUIHEXFOXKTFTANEKBXLBXHAYDFFMREEMRQEVADYMMEWACTODD"
     const sourceSeed = "xpsxzzfqvaohzzwlbofvqkqeemzhnrscpeeokoumekfodtgzmwghtqm"
 
-    // const createProjectPayload = new CreateProjectPayload({});
+    const title: Long = new Long(3);
+
+    const ProjectPayload = new CreateProjectPayload({title: title});
     const rpcStatus = await getRPCStatus();
     const currentTick = rpcStatus.tickInfo.tick;
     const targetTick = currentTick + 15;
@@ -24,6 +26,8 @@ export async function createProject() {
         .setAmount(10)
         .setTick(targetTick)
         .setInputType(3)
+        .setInputSize(ProjectPayload.getPackageSize())
+        .setPayload(ProjectPayload.getTransactionPayload())
 
     await tx.build(sourceSeed);
 
